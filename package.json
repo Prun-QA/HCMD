@@ -1,0 +1,24 @@
+{
+  "name": "cypress-project",
+  "version": "1.0.0",
+  "description": "A Cypress project configured automatically",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run"
+  },
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "latest",
+    "@bahmutov/cypress-esbuild-preprocessor": "latest",
+    "@faker-js/faker": "^10.4.0",
+    "cypress": "latest",
+    "playwright-webkit": "latest"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/e2e/**/*.js",
+      "cypress/e2e/**/*.ts",
+      "cypress/support/step_definitions/**/*.js",
+      "cypress/support/step_definitions/**/*.ts"
+    ]
+  }
+}
