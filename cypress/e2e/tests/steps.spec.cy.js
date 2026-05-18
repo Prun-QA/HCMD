@@ -280,11 +280,11 @@ When('I click on the SLA type dropdown', () => {
 Then('I select the SLA type from the dropdown list', () => {
     cy.get(hcmd.slaTypeOption).click();
 })
-When('I click on save stage button', () => {
-    cy.get(hcmd.saveStageButton).click();
-})
 Then ('I tick the end the flow here checkbox', () => {
     cy.get(hcmd.endFlowCheckbox).check();
+})
+When('I click on save stage button', () => {
+    cy.contains('Save Stage').click();
 })
 Then('I should be redirected to the next page', () => {
     cy.url().should('include', '/workflow/create');

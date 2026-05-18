@@ -42,7 +42,6 @@ Feature: Workflow tests
         Then I input the SLA timeline in the SLA timeline field
         When I click on the SLA type dropdown
         Then I select the SLA type from the dropdown list
-        When I click on save stage button
         Then I tick the end the flow here checkbox
         Then I click on the proceed button
         Then I should be redirected to the next page
