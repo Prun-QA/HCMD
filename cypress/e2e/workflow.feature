@@ -11,6 +11,18 @@ Feature: Workflow tests
         Then I should be redirected to the workflow page
         Then I should see the workflow page title
         Then I should see the table containing all existing workflows
+        When I click on the three dots icon for an active workflow in the workflow table
+        Then I should see a dropdown menu on the active workflow
+        When I click on the deactivate workflow button in the dropdown menu
+        Then I should see a deactivate workflow confirmation message
+        When I click on the yes deactivate button for deactivate workflow
+        Then I should get a success message indicating the workflow was deactivated successfully
+        When I click on the three dots icon for the deactivated workflow in the workflow table
+        Then I should see a dropdown menu on the deactivated workflow
+        When I click on the activate workflow button in the dropdown menu
+        Then I should see an activate workflow confirmation message
+        When I click on the yes activate button for activate workflow
+        Then I should get a success message indicating the workflow was activated successfully
         When I click on the add new workflow button
         Then I should be redirected to the add new workflow page
         Then I input the workflow title in the workflow title field
@@ -40,18 +52,6 @@ Feature: Workflow tests
         Then I should get a success message indicating the workflow was created successfully
         When I click on the cancel button on the workflow creation success message
         Then I should be redirected back to the workflow page
-        When I click on the three dots icon for an active workflow in the workflow table
-        Then I should see a dropdown menu on the active workflow
-        When I click on the deactivate workflow button in the dropdown menu
-        Then I should see a deactivate workflow confirmation message
-        When I click on the yes deactivate button for deactivate workflow
-        Then I should get a success message indicating the workflow was deactivated successfully
-        # When I click on the three dots icon for the deactivated workflow in the workflow table
-        # Then I should see a dropdown menu on the deactivated workflow
-        # When I click on the activate workflow button in the dropdown menu
-        # Then I should see an activate workflow confirmation message
-        # When I click on the yes activate button for activate workflow
-        # Then I should get a success message indicating the workflow was activated successfully
         When I click on the profile icon
         Then I should see a dropdown menu
         When I click on the logout button

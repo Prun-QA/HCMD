@@ -81,6 +81,42 @@ Then('I should see an error message indicating invalid credentials', () => {
 Then('I should see the table containing all existing roles', () => {
     cy.get(hcmd.rolesTable).should('be.visible');
 })
+When('I click on the three dots icon for an active role in the roles table', () => {
+    cy.get(hcmd.activeRoleThreeDotsIcon).first().click();
+})
+Then('I should see a dropdown menu on the active role', () => {
+    cy.get(hcmd.threedotdropdownMenu).should('be.visible');
+})
+When('I click on the disable role button in the dropdown menu', () => {
+    cy.contains('Disable Role').click();
+})
+Then('I should see a disable role confirmation message', () => {
+    cy.contains('This role will not be active on the platform again').should('be.visible');
+})
+When('I click on the yes proceed button for disable role', () => {
+    cy.contains('Yes, Proceed').click(); // Wait for 5 seconds to allow the roles table to refresh and display the updated status of the role
+})
+Then('I should get a success message indicating the role was disabled successfully', () => {
+    cy.contains('Role deactivated successfully').should('be.visible');
+})
+When('I click on the three dots icon for the disabled role in the roles table', () => {
+    cy.get(hcmd.disabledRoleThreeDotsIcon).first().click();
+})
+Then('I should see a dropdown menu on the disabled role', () => {
+    cy.get(hcmd.threedotdropdownMenu).should('be.visible');
+})
+When('I click on the enable role button in the dropdown menu', () => {
+    cy.contains('Enable Role').click();
+})
+Then('I should see a enable role confirmation message', () => {
+    cy.contains('This role will become active on the platform again').should('be.visible');
+})
+When('I click on the yes proceed button for enable role', () => {
+    cy.contains('Yes, Proceed').click();// Wait for 5 seconds to allow the roles table to refresh and display the updated status of the role
+})
+Then('I should get a success message indicating the role was enabled successfully', () => {
+    cy.contains('Role activated successfully').should('be.visible');
+})
 When('I click on the add new role button', () => {
     cy.get(hcmd.addNewRoleButton).click();
 })
@@ -136,43 +172,7 @@ When('I click on the cancel button on the success message', () => {
     cy.get(hcmd.cancelButton).click();
 })
 Then('I should be redirected back to the dashboard page', () => {
-    cy.url().should('include', '/dashboard');
-})
-When('I click on the three dots icon for an active role in the roles table', () => {
-    cy.get(hcmd.activeRoleThreeDotsIcon).click();
-})
-Then('I should see a dropdown menu on the active role', () => {
-    cy.get(hcmd.threedotdropdownMenu).should('be.visible');
-})
-When('I click on the disable role button in the dropdown menu', () => {
-    cy.contains('Disable Role').click();
-})
-Then('I should see a disable role confirmation message', () => {
-    cy.contains('This role will not be active on the platform again').should('be.visible');
-})
-When('I click on the yes proceed button for disable role', () => {
-    cy.contains('Yes, Proceed').click();
-})
-Then('I should get a success message indicating the role was disabled successfully', () => {
-    cy.contains('Role deactivated successfully').should('be.visible');
-})
-When('I click on the three dots icon for the disabled role in the roles table', () => {
-    cy.get(hcmd.disabledRoleThreeDotsIcon).click();
-})
-Then('I should see a dropdown menu on the disabled role', () => {
-    cy.get(hcmd.threedotdropdownMenu).should('be.visible');
-})
-When('I click on the enable role button in the dropdown menu', () => {
-    cy.contains('Enable Role').click();
-})
-Then('I should see a enable role confirmation message', () => {
-    cy.contains('This role will become active on the platform again').should('be.visible');
-})
-When('I click on the yes proceed button for enable role', () => {
-    cy.contains('Yes, Proceed').click();
-})
-Then('I should get a success message indicating the role was enabled successfully', () => {
-    cy.contains('Role activated successfully').should('be.visible');
+    cy.url().should('include', '/dashboard'); // Wait for 2 seconds to allow the dashboard to load and display the updated roles table
 })
 
 // Test case: Workflow accessibility and creation after login
@@ -187,6 +187,42 @@ Then('I should see the workflow page title', () => {
 })
 Then('I should see the table containing all existing workflows', () => {
     cy.get(hcmd.workflowsTable).should('be.visible');
+})
+When('I click on the three dots icon for an active workflow in the workflow table', () => {
+    cy.get(hcmd.activeWorkflowDotsIcon).scrollIntoView().first().click();
+})
+Then('I should see a dropdown menu on the active workflow', () => {
+    cy.get(hcmd.workflowDropdown).should('be.visible');
+})
+When('I click on the deactivate workflow button in the dropdown menu', () => {
+    cy.contains('Deactivate').click();
+})
+Then('I should see a deactivate workflow confirmation message', () => {
+    cy.contains('Are you sure you want to deactivate this workflow? This action will disable the workflow for all users.').should('be.visible');
+})
+When('I click on the yes deactivate button for deactivate workflow', () => {
+    cy.contains('Yes, Deactivate').click();
+})
+Then('I should get a success message indicating the workflow was deactivated successfully', () => {
+    cy.contains('Workflow deactivated successfully').should('be.visible');
+})
+When('I click on the three dots icon for the deactivated workflow in the workflow table', () => {
+    cy.get(hcmd.inactiveWorkflowDotsIcon).scrollIntoView().first().click();
+})
+Then('I should see a dropdown menu on the deactivated workflow', () => {
+    cy.get(hcmd.workflowDropdown).should('be.visible');
+})
+When('I click on the activate workflow button in the dropdown menu', () => {
+    cy.contains('Activate').click();
+})
+Then('I should see an activate workflow confirmation message', () => {
+    cy.contains('Are you sure you want to activate this workflow? This action will enable the workflow for all users.').should('be.visible');
+})
+When('I click on the yes activate button for activate workflow', () => {
+    cy.contains('Yes, Activate').click();
+})
+Then('I should get a success message indicating the workflow was activated successfully', () => {
+    cy.contains('Workflow activated successfully').should('be.visible');
 })
 When('I click on the add new workflow button', () => {
     cy.get(hcmd.addNewWorkflowButton).click();
@@ -272,40 +308,4 @@ When('I click on the cancel button on the workflow creation success message', ()
 })
 Then('I should be redirected back to the workflow page', () => {
     cy.url().should('include', '/workflow');
-})
-When('I click on the three dots icon for an active workflow in the workflow table', () => {
-    cy.get(hcmd.activeWorkflowDotsIcon).scrollIntoView().click();
-})
-Then('I should see a dropdown menu on the active workflow', () => {
-    cy.get(hcmd.workflowDropdown).should('be.visible');
-})
-When('I click on the deactivate workflow button in the dropdown menu', () => {
-    cy.contains('Deactivate').click();
-})
-Then('I should see a deactivate workflow confirmation message', () => {
-    cy.contains('Are you sure you want to deactivate this workflow? This action will disable the workflow for all users.').should('be.visible');
-})
-When('I click on the yes deactivate button for deactivate workflow', () => {
-    cy.contains('Yes, Deactivate').click();
-})
-Then('I should get a success message indicating the workflow was deactivated successfully', () => {
-    cy.contains('Workflow deactivated successfully').should('be.visible');
-})
-When('I click on the three dots icon for the deactivated workflow in the workflow table', () => {
-    cy.get(':nth-child(2) > td.h-\[52px\]').scrollIntoView().click();
-})
-Then('I should see a dropdown menu on the deactivated workflow', () => {
-    cy.get(hcmd.workflowDropdown).should('be.visible');
-})
-When('I click on the activate workflow button in the dropdown menu', () => {
-    cy.contains('Activate').click();
-})
-Then('I should see an activate workflow confirmation message', () => {
-    cy.contains('Are you sure you want to activate this workflow? This action will enable the workflow for all users.').should('be.visible');
-})
-When('I click on the yes activate button for activate workflow', () => {
-    cy.contains('Yes, Activate').click();
-})
-Then('I should get a success message indicating the workflow was activated successfully', () => {
-    cy.contains('Workflow activated successfully').should('be.visible');
 })
