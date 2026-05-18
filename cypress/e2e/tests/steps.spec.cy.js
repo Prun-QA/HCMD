@@ -269,9 +269,10 @@ When('I click on the authorizer dropdown field', () => {
 })
 Then('I select the authorizer from the dropdown list', () => {
     cy.get('.overflow-y-auto > .px-3').click();
+    cy.wait(4000); // Wait for 4 second to allow the dropdown to close after selection
 })
 Then('I input the SLA timeline in the SLA timeline field', () => {
-    cy.get(hcmd.slaTimelineField).type(workflow.slaTimeline);
+    cy.get(hcmd.slaTimelineField).scrollIntoView().type(workflow.slaTimeline, { force: true });
 })
 When('I click on the SLA type dropdown', () => {
     cy.get(hcmd.slaTypeDropdown).click();
