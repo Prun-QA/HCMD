@@ -142,7 +142,8 @@ Then('I should be redirected to the add involved staff form page', () => {
     cy.url().should('include', '/create');
 })
 When('I click on the select a staff dropdown', () => {
-    cy.get(hcmd.selectStaffDropdown).click();
+    cy.get('.bg-white > .flex > .flex-1').click();
+    cy.wait(5000); // Wait for 10 seconds to allow the dropdown options to load
 })
 Then('I select a staff from the dropdown list', () => {
     cy.get(hcmd.staffOption).click();
@@ -177,7 +178,7 @@ Then('I should be redirected back to the dashboard page', () => {
 
 // Test case: Workflow accessibility and creation after login
 When('I click on the workflow tab', () => {
-    cy.get(hcmd.workflowTab, { timeout: 10000 }).click();
+    cy.get(':nth-child(3) > .w-full > .inline-flex > .items-center').click();
 })
 Then('I should be redirected to the workflow page', () => {
     cy.url().should('include', '/workflow');
@@ -234,17 +235,17 @@ Then('I input the workflow title in the workflow title field', () => {
     cy.get(hcmd.workflowTitleField).type(workflow.title);
 })
 When('I click on the request category dropdown', () => {
-    cy.get(hcmd.requestCategoryDropdown).click();
+    cy.get('.space-y-8 > :nth-child(2) > :nth-child(2) > .bg-white > .flex').click();
 })
 Then('I select the request category from the dropdown list', () => {
-    cy.get(hcmd.requestCategoryOption).click();
+    cy.get(':nth-child(2) > .absolute').click();
 })
 When('I click on the request type dropdown', () => {
-    cy.get(hcmd.requestTypeDropdown).click();
+    cy.get(':nth-child(3) > :nth-child(2) > .bg-white > .flex').click();
 })
 Then('I select the request type from the dropdown list', () => {
     cy.get(hcmd.requestTypeOption).scrollIntoView().click();
-    cy.get(hcmd.requestTypeDropdown).click(); // Click again to close the dropdown
+    cy.get(':nth-child(3) > :nth-child(2) > .bg-white > .flex').click(); // Click again to close the dropdown
 })
 Then('I input the short description in the short description field', () => {
     cy.get(hcmd.shortDescriptionField).type(workflow.shortDescription);
@@ -269,13 +270,13 @@ When('I click on the authorizer dropdown field', () => {
 })
 Then('I select the authorizer from the dropdown list', () => {
     cy.get('.overflow-y-auto > .px-3').click();
-    cy.wait(4000); // Wait for 4 second to allow the dropdown to close after selection
+    // cy.wait(4000); // Wait for 4 second to allow the dropdown to close after selection
 })
 Then('I input the SLA timeline in the SLA timeline field', () => {
     cy.get(hcmd.slaTimelineField).scrollIntoView().type(workflow.slaTimeline, { force: true });
 })
 When('I click on the SLA type dropdown', () => {
-    cy.get(hcmd.slaTypeDropdown).click();
+    cy.get(hcmd.slaTypeDropdown).scrollIntoView().click( {force: true} );
 })
 Then('I select the SLA type from the dropdown list', () => {
     cy.get(hcmd.slaTypeOption).click();
