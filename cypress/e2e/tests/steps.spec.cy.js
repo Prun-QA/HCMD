@@ -22,13 +22,13 @@ Before(function () {
 let workflow;
 
 Before(function () {
-  workflow = {
-    title:            faker.lorem.words(3),
-    shortDescription: faker.lorem.sentence(),
-    stageTitle:       faker.lorem.words(2),
-    slaTimeline:      faker.number.int({ min: 1, max: 30 }),
-    // ↑ generates a random number between 1 and 30 days
-  };
+    workflow = {
+        title: faker.lorem.words(3),
+        shortDescription: faker.lorem.sentence(),
+        stageTitle: faker.lorem.words(2),
+        slaTimeline: faker.number.int({ min: 1, max: 30 }),
+        // ↑ generates a random number between 1 and 30 days
+    };
 });
 // Test case: Sign in manually and log out successfully
 Given('I am on the landing page', () => {
@@ -47,7 +47,7 @@ Then('I enter valid password', () => {
     cy.get(hcmd.passwordInput).type(hcmd.validPassword);
 })
 When('I click on the sign in button', () => {
-    cy.get(hcmd.signInButton, {timeout: 10000}).click();
+    cy.get(hcmd.signInButton, { timeout: 10000 }).click();
 }) // Wait for 5 seconds to allow the login process to complete and the dashboard to load
 Then('I should be logged in successfully', () => {
     cy.url().should('include', '/dashboard');
@@ -177,7 +177,7 @@ Then('I should be redirected back to the dashboard page', () => {
 
 // Test case: Workflow accessibility and creation after login
 When('I click on the workflow tab', () => {
-    cy.get(hcmd.workflowTab, {timeout: 10000}).click();
+    cy.get(hcmd.workflowTab, { timeout: 10000 }).click();
 })
 Then('I should be redirected to the workflow page', () => {
     cy.url().should('include', '/workflow');
@@ -280,7 +280,7 @@ When('I click on the SLA type dropdown', () => {
 Then('I select the SLA type from the dropdown list', () => {
     cy.get(hcmd.slaTypeOption).click();
 })
-Then ('I tick the end the flow here checkbox', () => {
+Then('I tick the end the flow here checkbox', () => {
     cy.get(hcmd.endFlowCheckbox).check();
 })
 When('I click on save stage button', () => {
@@ -289,7 +289,7 @@ When('I click on save stage button', () => {
 Then('I should be redirected to the next page', () => {
     cy.url().should('include', '/workflow/create');
 })
-When ('I click on the create workflow button', () => {
+When('I click on the create workflow button', () => {
     cy.get(hcmd.createWorkflowButton).click();
 })
 Then('I should be redirected to the preview workflow page', () => {
@@ -309,4 +309,61 @@ When('I click on the cancel button on the workflow creation success message', ()
 })
 Then('I should be redirected back to the workflow page', () => {
     cy.url().should('include', '/workflow');
+})
+
+// Test case: Setting a delegation after login
+When('I click on the delegation module', () => {
+    cy.get(hcmd.delegationModule).click();
+})
+Then('I should be redirected to the delegation page', () => {
+    cy.url().should('include', '/delegation');
+})
+When('I click on the delegated to dropdown', () => {
+    cy.get(hcmd.delegatedToDropdown).click();
+    cy.wait(10000); // Wait for 10 seconds to allow the dropdown options to load
+})
+Then('I select a staff from the dropdown list of delegated to', () => {
+    cy.get(hcmd.delegatedToOption).click();
+})
+When('I click on the duration dropdown', () => {
+    cy.get(hcmd.durationDropdown).click();
+})
+Then('I select a duration from the dropdown list', () => {
+    cy.get(hcmd.durationOption).click();
+})
+Then('I should fill in the reason field with a valid reason for delegation', () => {
+    cy.get(hcmd.reasonField).type('Test reason');
+})
+When('I click on the set delegation button', () => {
+    cy.contains('Set Delegation').scrollIntoView().click();
+})
+Then('I should see a confirmation message for setting the delegation', () => {
+    cy.contains('Set this delegation?').should('be.visible');
+})
+When('I click on the yes proceed button for setting the delegation', () => {
+    cy.contains('Yes, Proceed').click();
+})
+Then('I should get a success message indicating the delegation was set successfully', () => {
+    cy.contains('The delegation has been configured successfully.').should('be.visible');
+})
+When('I click on the cancel button on the success message for the newly set delegation', () => {
+    cy.get(hcmd.successCancelButton).click();
+})
+Then('I should be redirected back to the delegation page', () => {
+    cy.url().should('include', '/delegation');
+})
+Then('I should see the delegation details of the newly set delegation on the delegation page', () => {
+    cy.contains('Active Delegation').should('be.visible');
+})
+When('I click on the cancel delegation button for the newly set delegation', () => {
+    cy.get(hcmd.cancelDelegationButton).click();
+})
+Then('I should see a confirmation message for removing the delegation', () => {
+    cy.contains('Remove this delegation?').should('be.visible');
+})
+When('I click on the yes remove button for removing the delegation', () => {
+    cy.contains('Yes, Remove').click();
+})
+Then('I should get a success message indicating the delegation was removed successfully', () => {
+    cy.contains('Delegation removed successfully').should('be.visible');
 })
